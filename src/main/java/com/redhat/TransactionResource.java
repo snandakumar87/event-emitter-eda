@@ -1,4 +1,4 @@
-package me.escoffier;
+package com.redhat;
 
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
@@ -17,14 +17,15 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class TransactionResource {
 
-    private static final Logger LOGGER = Logger.getLogger("MovieResource");
+    private static final Logger LOGGER = Logger.getLogger("TransactionResource");
 
     @Inject @Channel("txn") Emitter<Transaction> emitter;
 
 
     @POST
     public Response enqueueMovie(Transaction transaction) {
-        LOGGER.infof("Sending movie %s to Kafka", transaction.getId());
+        System.out.println("came here");
+        LOGGER.infof("Sending transactions %s to Kafka", transaction.getId());
         emitter.send(transaction);
         return Response.accepted().build();
     }
